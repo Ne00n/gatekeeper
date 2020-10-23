@@ -5,7 +5,7 @@ def run(cmd):
     return result
 
 interfaces = run("ip addr show")
-bridgesRaw = re.findall("(vmbr[0-9]+):",interfaces, re.MULTILINE | re.DOTALL)
+bridgesRaw = re.findall("(vmbr[0-9a-z]+):",interfaces, re.MULTILINE | re.DOTALL)
 bridges = ""
 for index,bridge in enumerate(bridgesRaw):
     bridges += "ifindex="+str(index +1)+"	ifname="+bridge+"\n"

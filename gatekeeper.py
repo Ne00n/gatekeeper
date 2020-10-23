@@ -25,17 +25,27 @@ class gatekeeper:
 
     def triggers(self,source):
         for src,data in source.items():
-            #Any source > 300 connections within 5 minutes
-            if len(data) > 300:
-                self.notify(src+" exceeded 300 Connections",data)
+            #Any source > 150 connections within 5 minutes
+            if len(data) > 150:
+                message = self.prepareMessage(data,True)
+                self.notify(src+" exceeded 150 Connections",message)
 
-    def notify(self,title,message):
+    def prepareMessage(self,data,short=False):
+        rows,count = "",0
+        for entry in data:
+            rows += json.dumps(entry)+"\n"
+            count = count +1
+            if short == True and count == 10:
+                return rows
+        return rows
+
+    def notify(self,title,message,priority='5'):
         #Gotify
-        params = (('token', '<apptoken>'))
+        params = (('token', '<apptoken>'),)
         payload = {
                     'title': (None, title),
                     'message': (None, message),
-                    'priority': (None, '5')
+                    'priority': (None, priority),
                   }
         response = requests.post('https://push.example.de/message', params=params, files=payload)
 

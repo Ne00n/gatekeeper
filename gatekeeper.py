@@ -11,7 +11,7 @@ class gatekeeper:
         with open('/tmp/pmacct.json', 'r') as f:
             network = f.read()
         print("Loading config")
-        with open('config.json') as handle:
+        with open('/root/gatekeeper/config.json') as handle:
             config = json.loads(handle.read())
 
     def sortBySource(self,rows):

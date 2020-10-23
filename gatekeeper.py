@@ -33,7 +33,7 @@ class gatekeeper:
     def prepareMessage(self,data,short=False):
         rows,count = "",0
         for entry in data:
-            rows += json.dumps(entry)+"\n"
+            rows += entry['ip_src']+":"+str(entry['port_src'])+" --> "+entry['ip_dst']+":"+str(entry['port_dst'])+", "+entry['ip_proto'].upper()+", "+str(entry['packets'])+" Packets, "+str(entry['bytes'])+" Bytes, "+entry['stamp_updated']+"\n"
             count = count +1
             if short == True and count == 25:
                 return rows

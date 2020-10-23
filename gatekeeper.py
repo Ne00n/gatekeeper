@@ -26,7 +26,7 @@ class gatekeeper:
     def triggers(self,source):
         for src,data in source.items():
             #Any source > 300 connections within 5 minutes
-            if len(data) > 300:
+            if len(data) / 5 > 300:
                 message = self.prepareMessage(data,True)
                 self.notify(src+" exceeded 300 Connections",message)
 

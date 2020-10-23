@@ -8,4 +8,7 @@ apt-get install -y pmacct python3
 ```
 
 **Prepare**<br />
-Move pmacctd.conf to /etc/pmacctd.conf and restart
+```
+cp pmacctd.conf /etc/pmacctd.conf
+systemctl restart pmacct
+```

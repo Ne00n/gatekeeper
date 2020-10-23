@@ -35,7 +35,7 @@ class gatekeeper:
         for entry in data:
             rows += json.dumps(entry)+"\n"
             count = count +1
-            if short == True and count == 10:
+            if short == True and count == 25:
                 return rows
         return rows
 

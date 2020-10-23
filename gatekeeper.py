@@ -2,14 +2,17 @@
 import requests, json
 
 ports = {'21':5, '22':5, '25':5, '80':2, '443':2, '6667':2, '6881':500}
-network = []
+network,config = [],[]
 
 class gatekeeper:
     def __init__(self):
-        global network
+        global network,config
         print("Loading pmacct")
         with open('/tmp/pmacct.json', 'r') as f:
             network = f.read()
+        print("Loading config")
+        with open('config.json') as handle:
+            config = json.loads(handle.read())
 
     def sortBySource(self,rows):
         source = {}
@@ -41,13 +44,13 @@ class gatekeeper:
 
     def notify(self,title,message,priority='5'):
         #Gotify
-        params = (('token', '<apptoken>'),)
+        params = (('token', config['token']),)
         payload = {
                     'title': (None, title),
                     'message': (None, message),
                     'priority': (None, priority),
                   }
-        response = requests.post('https://push.example.de/message', params=params, files=payload)
+        response = requests.post(config['server'], params=params, files=payload)
 
     def run(self):
         print("Parsing pmacct")

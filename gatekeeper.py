@@ -41,7 +41,7 @@ class gatekeeper:
             #Any source > 350 connections within 5 minutes
             if len(data) / 5 > limits['any']:
                 message = self.prepareMessage(data,True)
-                self.notify(src+" exceeded 350/"+str(round(len(data) / 5))+" Connections",message)
+                self.notify(src+" exceeded "+str(limits['any'])+"/"+str(round(len(data) / 5))+" Connections",message)
 
     def prepareMessage(self,data,short=False):
         rows,count = "",0

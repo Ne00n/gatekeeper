@@ -35,13 +35,26 @@ class gatekeeper:
         else:
             return ports['any']
 
+    def getPortCount(self,port,data):
+        count = 0
+        for entry in data:
+            if entry['ip_dst'] == port:
+                count = count +1
+        return count
+
     def triggers(self,source):
         for src,data in source.items():
             limits =  self.getLimits(src)
-            #Any source > 250 connections within 2 minutes
-            if len(data) / 2 > limits['any']:
-                message = self.prepareMessage(data,True)
-                self.notify(src+" exceeded "+str(limits['any'])+"/"+str(round(len(data) / 2))+" Connections",message)
+            for port in limits:
+                if port == "any":
+                    if len(data) / 2 > limits['any']:
+                        message = self.prepareMessage(data,True)
+                        self.notify(src+" exceeded "+str(limits['any'])+"/"+str(round(len(data) / 2)),message)
+                else:
+                    count = self.getPortCount(port,data)
+                    if count / 2 > limits[port]:
+                        message = self.prepareMessage(data,True)
+                        self.notify(src+" Port "+str(port)+" exceeded "+str(limits[port])+"/"+str(round(len(data) / 2)),message)
 
     def prepareMessage(self,data,short=False):
         rows,count = "",0

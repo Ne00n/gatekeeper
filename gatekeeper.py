@@ -1,18 +1,21 @@
 #!/usr/bin/python3
-import requests, json
+import requests, json, os
 
-ports = {'21':5, '22':5, '25':5, '80':2, '443':2, '6667':2, '6881':500}
-network,config = [],[]
+network,config,ports = [],[],{}
 
 class gatekeeper:
     def __init__(self):
-        global network,config
+        dirname, filename = os.path.split(os.path.abspath(__file__))
+        global network,config,ports
         print("Loading pmacct")
         with open('/tmp/pmacct.json', 'r') as f:
             network = f.read()
         print("Loading config")
-        with open('/root/gatekeeper/config.json') as handle:
+        with open(dirname+'/configs/config.json') as handle:
             config = json.loads(handle.read())
+        print("Loading settings")
+        with open(dirname+'/configs/settings.json') as handle:
+            ports = json.loads(handle.read())
 
     def sortBySource(self,rows):
         source = {}
@@ -26,10 +29,17 @@ class gatekeeper:
                 source[row['ip_src']] = (row,)
         return source
 
+    def getLimits(self,src):
+        if src in ports:
+            return ports[src]
+        else:
+            return ports['any']
+
     def triggers(self,source):
         for src,data in source.items():
+            limits =  self.getLimits(src)
             #Any source > 350 connections within 5 minutes
-            if len(data) / 5 > 350:
+            if len(data) / 5 > limits['any']:
                 message = self.prepareMessage(data,True)
                 self.notify(src+" exceeded 350/"+str(round(len(data) / 5))+" Connections",message)
 

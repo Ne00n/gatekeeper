@@ -38,7 +38,7 @@ class gatekeeper:
         for entry in data:
             rows += entry['ip_src']+":"+str(entry['port_src'])+" --> "+entry['ip_dst']+":"+str(entry['port_dst'])+", "+entry['ip_proto'].upper()+", "+str(entry['packets'])+" Packet(s), "+str(entry['bytes'])+" Bytes\n"
             count = count +1
-            if short == True and count == 40:
+            if short == True and count == 100:
                 return rows
         return rows
 

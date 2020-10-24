@@ -38,10 +38,10 @@ class gatekeeper:
     def triggers(self,source):
         for src,data in source.items():
             limits =  self.getLimits(src)
-            #Any source > 350 connections within 5 minutes
-            if len(data) / 5 > limits['any']:
+            #Any source > 250 connections within 2 minutes
+            if len(data) / 2 > limits['any']:
                 message = self.prepareMessage(data,True)
-                self.notify(src+" exceeded "+str(limits['any'])+"/"+str(round(len(data) / 5))+" Connections",message)
+                self.notify(src+" exceeded "+str(limits['any'])+"/"+str(round(len(data) / 2))+" Connections",message)
 
     def prepareMessage(self,data,short=False):
         rows,count = "",0

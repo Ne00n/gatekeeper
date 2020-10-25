@@ -1,4 +1,4 @@
 {
- "token":"<apptoken>",
- "server":"<https://push.bla.com/message>"
+ "user1":{"type":"gotify","token":"<apptoken>","server":"<https://push.bla.com/message>"},
+ "user2":{"type":"gotify","token":"<apptoken>","server":"<https://push.bla.com/message>"}
 }

@@ -66,14 +66,15 @@ class gatekeeper:
         return rows
 
     def notify(self,title,message,priority='5'):
-        #Gotify
-        params = (('token', config['token']),)
-        payload = {
-                    'title': (None, title),
-                    'message': (None, message),
-                    'priority': (None, priority),
-                  }
-        response = requests.post(config['server'], params=params, files=payload)
+        for id,row in config.items():
+            if row['type'] == "gotify":
+                params = (('token', row['token']),)
+                payload = {
+                            'title': (None, title),
+                            'message': (None, message),
+                            'priority': (None, priority),
+                          }
+                response = requests.post(row['server'], params=params, files=payload)
 
     def run(self):
         print("Parsing pmacct")

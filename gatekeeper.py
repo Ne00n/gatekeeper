@@ -38,7 +38,7 @@ class gatekeeper:
     def getPortCount(self,port,data):
         count = 0
         for entry in data:
-            if entry['port_dst'] == port:
+            if entry['port_dst'] == int(port):
                 count = count +1
         return count
 

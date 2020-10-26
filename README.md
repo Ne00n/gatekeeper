@@ -15,3 +15,6 @@ cp pmacctd.conf /etc/pmacct/pmacctd.conf
 python3 interfacer.py
 systemctl restart pmacct
 ```
+
+**Workflow**
+Source Filter => Any Filter => Port Filter => Any Filter

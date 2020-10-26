@@ -50,7 +50,7 @@ class gatekeeper:
                     if len(data) >= limits['any']:
                         message = self.prepareMessage(data,True)
                         self.notify(src+" exceeded "+str(limits['any'])+"/"+str(len(data)),message)
-                elif port != "0":
+                else:
                     count = self.getPortCount(port,data)
                     if count >= limits[port]:
                         message = self.prepareMessage(data,True)

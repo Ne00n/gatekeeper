@@ -47,12 +47,12 @@ class gatekeeper:
             limits =  self.getLimits(src)
             for port in limits:
                 if port == "any":
-                    if len(data) >= limits['any']:
+                    if len(data) > limits['any']:
                         message = self.prepareMessage(data,True)
                         self.notify(src+" exceeded "+str(limits['any'])+"/"+str(len(data)),message)
                 else:
                     count = self.getPortCount(port,data)
-                    if count >= limits[port]:
+                    if count > limits[port]:
                         message = self.prepareMessage(data,True)
                         self.notify(src+" Port "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data)),message)
 

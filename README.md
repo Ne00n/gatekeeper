@@ -17,4 +17,7 @@ systemctl restart pmacct
 ```
 
 **Workflow**<br />
-Source Filter => Any Filter => Port Filter => Any Filter
+Source Filter => Any Filter => Port Filter => Any Filter<br />
+
+**Config**<br />
+0 = no Alert

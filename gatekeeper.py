@@ -38,8 +38,13 @@ class gatekeeper:
     def getPortCount(self,port,data):
         count = 0
         for entry in data:
-            if entry['port_dst'] == int(port):
-                count = count +1
+            if entry['port_dst'] == int(port): count = count +1
+        return count
+
+    def getLocalCount(self,port,data):
+        count = 0
+        for entry in data:
+            if ipaddress.ip_address(entry['ip_src']).is_private and ipaddress.ip_address(entry['ip_dst']).is_private: count = count +1
         return count
 
     def triggers(self,source):
@@ -49,12 +54,23 @@ class gatekeeper:
                 if port == "any":
                     if len(data) >= limits['any'] and limits['any'] != 0:
                         message = self.prepareMessage(data,True)
-                        self.notify(src+" exceeded "+str(limits['any'])+"/"+str(len(data)),message)
+                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        print(header)
+                        self.notify(header,message)
+                elif port == "local":
+                    count = self.getLocalCount(port,data)
+                    if count >= limits[port] and limits[port] != 0:
+                        message = self.prepareMessage(data,True)
+                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        print(header)
+                        self.notify(header,message)
                 else:
                     count = self.getPortCount(port,data)
                     if count >= limits[port] and limits[port] != 0:
                         message = self.prepareMessage(data,True)
-                        self.notify(src+" Port "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data)),message)
+                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        print(header)
+                        self.notify(header,message)
 
     def prepareMessage(self,data,short=False):
         rows,count = "",0

@@ -9,11 +9,15 @@ apt-get install -y pmacct python3
 
 **Prepare**<br />
 ```
+cd /opt/
+git clone https://github.com/Ne00n/gatekeeper.git
+cd gatekeeper
 cp configs/config.example.json configs/config.json
 cp configs/settings.example.json configs/settings.json
 cp pmacctd.conf /etc/pmacct/pmacctd.conf
 python3 interfacer.py
-systemctl restart pmacct
+systemctl enable pmacctd
+systemctl restart pmacctd
 ```
 
 **Workflow**<br />

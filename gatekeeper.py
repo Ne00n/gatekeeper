@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import requests, json, os
+import requests, ipaddress, json, os
 
 network,config,ports = [],[],{}
 
@@ -84,9 +84,7 @@ class gatekeeper:
             if row.strip() == "": continue
             line = json.loads(row)
             #Drop Multicast traffic
-            if '239.255.255.' in line['ip_dst']: continue
-            if '224.0.0.' in line['ip_dst']: continue
-            if 'ff02::1' in line['ip_dst']: continue
+            if ipaddress.ip_address(line['ip_dst']).is_multicast: continue
             rows.append(line)
         source = self.sortBySource(rows)
         self.triggers(source)

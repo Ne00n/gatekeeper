@@ -54,21 +54,21 @@ class gatekeeper:
                 if port == "any":
                     if len(data) >= limits['any'] and limits['any'] != 0:
                         message = self.prepareMessage(data,True)
-                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        header = f"{src} {port} exceeded {len(data)}/{limits[port]}"
                         print(header)
                         self.notify(header,message)
                 elif port == "local":
                     count = self.getLocalCount(port,data)
                     if count >= limits[port] and limits[port] != 0:
                         message = self.prepareMessage(data,True)
-                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        header = f"{src} {port} exceeded {len(data)}/{limits[port]}"
                         print(header)
                         self.notify(header,message)
                 else:
                     count = self.getPortCount(port,data)
                     if count >= limits[port] and limits[port] != 0:
                         message = self.prepareMessage(data,True)
-                        header = src+" "+str(port)+" exceeded "+str(limits[port])+"/"+str(len(data))
+                        header = f"{src} {port} exceeded {len(data)}/{limits[port]}"
                         print(header)
                         self.notify(header,message)
 

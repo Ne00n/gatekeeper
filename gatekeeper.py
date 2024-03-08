@@ -40,6 +40,7 @@ class gatekeeper:
         for entry in data:
             if ipaddress.ip_address(entry['ip_dst']).is_private: continue
             if entry['port_dst'] == int(port): count = count +1
+            if entry['port_src'] == int(port): count = count +1
         return count
 
     def getLocalCount(self,port,data):

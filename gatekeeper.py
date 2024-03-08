@@ -63,14 +63,14 @@ class gatekeeper:
                     count = self.getLocalCount(port,data)
                     if count >= limits[port] and limits[port] != 0:
                         message = self.prepareMessage(data,True)
-                        header = f"{src} {port} exceeded {len(data)}/{limits[port]}"
+                        header = f"{src} {port} exceeded {count}/{limits[port]}"
                         print(header)
                         self.notify(header,message)
                 else:
                     count = self.getPortCount(port,data)
                     if count >= limits[port] and limits[port] != 0:
                         message = self.prepareMessage(data,True)
-                        header = f"{src} {port} exceeded {len(data)}/{limits[port]}"
+                        header = f"{src} {port} exceeded {count}/{limits[port]}"
                         print(header)
                         self.notify(header,message)
 

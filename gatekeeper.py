@@ -90,7 +90,10 @@ class gatekeeper:
                             'message': (None, message),
                             'priority': (None, priority),
                           }
-                response = requests.post(row['server'], params=params, files=payload)
+                try:
+                    response = requests.post(row['server'], params=params, files=payload)
+                except Exception as ex:
+                    print(ex)
 
     def run(self):
         print("Parsing pmacct")

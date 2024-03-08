@@ -39,6 +39,7 @@ class gatekeeper:
         count = 0
         for entry in data:
             if ipaddress.ip_address(entry['ip_src']).is_private and ipaddress.ip_address(entry['ip_dst']).is_private: continue
+            if ipaddress.ip_address(entry['ip_dst']).is_private: continue
             if entry['port_dst'] == int(port): count = count +1
         return count
 
